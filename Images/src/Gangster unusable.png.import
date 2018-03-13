@@ -1,0 +1,32 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/Gangster unusable.png-22a489955e7e1a0ede0d54d20c1ecb6e.stex"
+
+[deps]
+
+source_file="res://Images/src/Gangster unusable.png"
+source_md5="8db2c5e3bc840a5616ed61ec894c3363"
+
+dest_files=[ "res://.import/Gangster unusable.png-22a489955e7e1a0ede0d54d20c1ecb6e.stex" ]
+dest_md5="d5bbabc2c36c550f708665b0a620db20"
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=true
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0
