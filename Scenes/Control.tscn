@@ -433,17 +433,17 @@ enabled_focus_mode = 2
 shortcut = null
 group = null
 
-[connection signal="enable_button" from="F" to="F/Enforcer" method="_on_F_enable_button"]
-
-[connection signal="enable_button" from="F" to="F/Godfather" method="_on_F_enable_button"]
+[connection signal="enable_button" from="F" to="F/Consig" method="_on_F_enable_button"]
 
 [connection signal="enable_button" from="F" to="F/Gangster" method="_on_F_enable_button"]
 
 [connection signal="enable_button" from="F" to="F/Framer" method="_on_F_enable_button"]
 
-[connection signal="enable_button" from="F" to="F/Consig" method="_on_F_enable_button"]
+[connection signal="enable_button" from="F" to="F/Enforcer" method="_on_F_enable_button"]
 
 [connection signal="enable_button" from="F" to="F/Hitman" method="_on_F_enable_button"]
+
+[connection signal="enable_button" from="F" to="F/Godfather" method="_on_F_enable_button"]
 
 [connection signal="pressed" from="F" to="F" method="_on_F_pressed"]
 
@@ -483,17 +483,17 @@ group = null
 
 [connection signal="respect_from_godfathers" from="F/Godfather" to="F" method="_on_Godfather_respect_from_godfathers"]
 
-[connection signal="timeout" from="GlobalTimer" to="F/Enforcer" method="_on_GlobalTimer_timeout"]
-
-[connection signal="timeout" from="GlobalTimer" to="F/Godfather" method="_on_GlobalTimer_timeout"]
+[connection signal="timeout" from="GlobalTimer" to="F/Consig" method="_on_GlobalTimer_timeout"]
 
 [connection signal="timeout" from="GlobalTimer" to="F/Gangster" method="_on_GlobalTimer_timeout"]
 
 [connection signal="timeout" from="GlobalTimer" to="F/Framer" method="_on_GlobalTimer_timeout"]
 
-[connection signal="timeout" from="GlobalTimer" to="F/Consig" method="_on_GlobalTimer_timeout"]
+[connection signal="timeout" from="GlobalTimer" to="F/Enforcer" method="_on_GlobalTimer_timeout"]
 
 [connection signal="timeout" from="GlobalTimer" to="F/Hitman" method="_on_GlobalTimer_timeout"]
+
+[connection signal="timeout" from="GlobalTimer" to="F/Godfather" method="_on_GlobalTimer_timeout"]
 
 
 [editable path="Margin"]

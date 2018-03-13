@@ -2,6 +2,8 @@ extends Control
 
 var game_icon = load("res://Images/src/mafia_clicker_icon.png")
 const SAVE_PATH = "res://Saves/save.json"
+onready var F = get_child(1)
+
 
 
 func quit_game():
@@ -17,6 +19,7 @@ func _input(event):
 		quit_game()
 
 func save_game():
+	
 	#Gets data from persistent nodes
 	var save_dict = {}
 	var nodes_to_save = get_tree().get_nodes_in_group('persistent')
@@ -49,6 +52,7 @@ func load_game():
 			node.set(attribute, data[node_path][attribute])
 	
 	save_file.close()
+	
 
 
 func _ready():
