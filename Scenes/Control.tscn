@@ -433,18 +433,6 @@ enabled_focus_mode = 2
 shortcut = null
 group = null
 
-[connection signal="enable_button" from="F" to="F/Consig" method="_on_F_enable_button"]
-
-[connection signal="enable_button" from="F" to="F/Gangster" method="_on_F_enable_button"]
-
-[connection signal="enable_button" from="F" to="F/Framer" method="_on_F_enable_button"]
-
-[connection signal="enable_button" from="F" to="F/Enforcer" method="_on_F_enable_button"]
-
-[connection signal="enable_button" from="F" to="F/Hitman" method="_on_F_enable_button"]
-
-[connection signal="enable_button" from="F" to="F/Godfather" method="_on_F_enable_button"]
-
 [connection signal="pressed" from="F" to="F" method="_on_F_pressed"]
 
 [connection signal="pressed" from="F/Gangster" to="F" method="_on_Gangster_pressed"]
@@ -457,39 +445,29 @@ group = null
 
 [connection signal="pressed" from="F/Enforcer" to="F/Enforcer" method="_on_Enforcer_pressed"]
 
-[connection signal="respect_from_enforcers" from="F/Enforcer" to="F" method="_on_Enforcer_respect_from_enforcers"]
-
 [connection signal="pressed" from="F/Framer" to="F" method="_on_Framer_pressed"]
 
 [connection signal="pressed" from="F/Framer" to="F/Framer" method="_on_Framer_pressed"]
-
-[connection signal="respect_from_framers" from="F/Framer" to="F" method="_on_Framer_respect_from_framers"]
 
 [connection signal="pressed" from="F/Consig" to="F" method="_on_Consig_pressed"]
 
 [connection signal="pressed" from="F/Consig" to="F/Consig" method="_on_Consig_pressed"]
 
-[connection signal="respect_from_consigs" from="F/Consig" to="F" method="_on_Consig_respect_from_consigs"]
-
 [connection signal="pressed" from="F/Hitman" to="F" method="_on_Hitman_pressed"]
 
 [connection signal="pressed" from="F/Hitman" to="F/Hitman" method="_on_Hitman_pressed"]
-
-[connection signal="respect_from_hitmen" from="F/Hitman" to="F" method="_on_Hitman_respect_from_hitmen"]
 
 [connection signal="pressed" from="F/Godfather" to="F" method="_on_Godfather_pressed"]
 
 [connection signal="pressed" from="F/Godfather" to="F/Godfather" method="_on_Godfather_pressed"]
 
-[connection signal="respect_from_godfathers" from="F/Godfather" to="F" method="_on_Godfather_respect_from_godfathers"]
-
-[connection signal="timeout" from="GlobalTimer" to="F/Consig" method="_on_GlobalTimer_timeout"]
-
 [connection signal="timeout" from="GlobalTimer" to="F/Gangster" method="_on_GlobalTimer_timeout"]
+
+[connection signal="timeout" from="GlobalTimer" to="F/Enforcer" method="_on_GlobalTimer_timeout"]
 
 [connection signal="timeout" from="GlobalTimer" to="F/Framer" method="_on_GlobalTimer_timeout"]
 
-[connection signal="timeout" from="GlobalTimer" to="F/Enforcer" method="_on_GlobalTimer_timeout"]
+[connection signal="timeout" from="GlobalTimer" to="F/Consig" method="_on_GlobalTimer_timeout"]
 
 [connection signal="timeout" from="GlobalTimer" to="F/Hitman" method="_on_GlobalTimer_timeout"]
 
