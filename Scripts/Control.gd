@@ -5,6 +5,7 @@ const SAVE_PATH = "res://Saves/save.json"
 onready var F = get_child(1)
 
 
+
 func quit_game():
 	# closes the root scene, quitting the game.
 	get_tree().quit()
@@ -16,7 +17,7 @@ func _input(event):
 	if(event.is_action_pressed("ui_cancel")):
 		save_game()
 		quit_game()
-		
+
 func save_game():
 	
 	#Gets data from persistent nodes
@@ -52,8 +53,10 @@ func load_game():
 	
 	save_file.close()
 	
+
+
 func _ready():
+	
 	OS.set_window_title("Mafia Clicker")
 	OS.set_icon(game_icon)
-
-	#print(OS.get_unix_time())
+#print(OS.get_unix_time())

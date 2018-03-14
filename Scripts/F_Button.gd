@@ -33,6 +33,8 @@ func _ready():
 	Hitman.hide()
 	Godfather.hide()
 	
+	
+	
 	if( Gangster.amount > 0):
 		Gangster.show()
 	
@@ -53,7 +55,9 @@ func _ready():
 		
 	#unix time is used to calculate how long the game has been closed
 	update_respect(savetime, OS.get_unix_time())
-
+	
+	
+		
 #every frame checks to if any button can be enabled
 #enables if wallet >= button.cost, disables if not
 func _process(delta):
@@ -216,4 +220,4 @@ func save():
 		savetime = savetime
 		
 	}
-	return save_dict
+return save_dict

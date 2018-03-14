@@ -76,14 +76,6 @@ action_mode = 0
 enabled_focus_mode = 0
 shortcut = null
 group = null
-texture_normal = ExtResource( 2 )
-texture_pressed = ExtResource( 3 )
-texture_hover = ExtResource( 4 )
-texture_click_mask = ExtResource( 5 )
-script = ExtResource( 6 )
-_sections_unfolded = [ "Focus" ]
-
-[node name="Gangster" type="TextureButton" parent="F" index="0"]
 texture_normal = ExtResource( 3 )
 texture_pressed = ExtResource( 4 )
 texture_hover = ExtResource( 5 )
@@ -193,7 +185,6 @@ texture_pressed = ExtResource( 14 )
 texture_hover = ExtResource( 15 )
 texture_disabled = ExtResource( 16 )
 script = ExtResource( 17 )
-
 _sections_unfolded = [ "Focus", "Pause", "Textures" ]
 
 [node name="Enforcer_Gang_Size" type="Label" parent="F/Enforcer" index="0"]
@@ -349,6 +340,7 @@ disabled = true
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
+group = null
 texture_normal = ExtResource( 18 )
 texture_pressed = ExtResource( 19 )
 texture_disabled = ExtResource( 20 )
