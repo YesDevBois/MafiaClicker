@@ -14,7 +14,6 @@ onready var Gangster_Cost_txt = get_node("Gangster_Cost")
 func _ready():
 	# This allows spacebar to be used to for only incrementing F
 	set_focus_mode(FOCUS_NONE)
-	
 	costmultiplier = 1.0 + (amount*0.1)
 	cost = basecost*costmultiplier
 	
@@ -44,6 +43,7 @@ func _on_Gangster_pressed():
 func _on_F_enable_button(me, boolval):
 	if(me == 0):
 		set_disabled(!boolval)
+
 func save():
 	var save_dict = {
 		
@@ -51,6 +51,5 @@ func save():
 		
 	}
 	return save_dict
-
 
 #all child nodes act exactly as this one with differing base cost

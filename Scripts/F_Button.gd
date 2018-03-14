@@ -22,7 +22,7 @@ onready var Godfather = get_child(5)
 
 func _ready():
 	
-	# This allows spacebar to be used to for only incrementing F
+	# This allows spacebar to be used for only incrementing F
 	set_focus_mode(FOCUS_ALL)
 	grab_focus()
 	
@@ -32,7 +32,6 @@ func _ready():
 	Consig.hide()
 	Hitman.hide()
 	Godfather.hide()
-	
 	
 	
 	if( Gangster.amount > 0):
@@ -55,8 +54,6 @@ func _ready():
 		
 	#unix time is used to calculate how long the game has been closed
 	update_respect(savetime, OS.get_unix_time())
-	
-	
 
 #every frame checks to if any button can be enabled
 #enables if wallet >= button.cost, disables if not
