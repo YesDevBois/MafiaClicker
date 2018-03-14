@@ -1,33 +1,40 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://Scripts/Control.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Node.gd" type="Script" id=2]
-[ext_resource path="res://Images/F_tex.png" type="Texture" id=3]
-[ext_resource path="res://Images/F_pressed_tex.png" type="Texture" id=4]
-[ext_resource path="res://Images/F_hover_tex.png" type="Texture" id=5]
-[ext_resource path="res://Images/F_clickmask_tex.png" type="BitMap" id=6]
-[ext_resource path="res://Scripts/F_Button.gd" type="Script" id=7]
-[ext_resource path="res://Images/Gangster_usable_tex.png" type="Texture" id=8]
-[ext_resource path="res://Images/Gangster_pressed_tex.png" type="Texture" id=9]
-[ext_resource path="res://Images/Gangster_hover_tex.png" type="Texture" id=10]
-[ext_resource path="res://Images/Gangster_disabled_tex.png" type="Texture" id=11]
-[ext_resource path="res://Scripts/Gangster.gd" type="Script" id=12]
-[ext_resource path="res://Images/Enforcer_Usable_Tex.png" type="Texture" id=13]
-[ext_resource path="res://Images/Enforcer_Pressed_Tex.png" type="Texture" id=14]
-[ext_resource path="res://Images/Enforcer_Hover_Tex.png" type="Texture" id=15]
-[ext_resource path="res://Images/Enforcer_disabled_Tex.png" type="Texture" id=16]
-[ext_resource path="res://Scripts/Enforcer.gd" type="Script" id=17]
-[ext_resource path="res://Images/src/Gangster usable.png" type="Texture" id=18]
-[ext_resource path="res://Images/src/Gangster pressed.png" type="Texture" id=19]
-[ext_resource path="res://Images/src/Gangster unusable.png" type="Texture" id=20]
-[ext_resource path="res://Scripts/Framer.gd" type="Script" id=21]
-[ext_resource path="res://Scripts/Consig.gd" type="Script" id=22]
-[ext_resource path="res://Scripts/Hitman.gd" type="Script" id=23]
-[ext_resource path="res://Scripts/Godfather.gd" type="Script" id=24]
-[ext_resource path="res://Scripts/Wallet.gd" type="Script" id=25]
-[ext_resource path="res://Images/wallet_tex.png" type="Texture" id=26]
-[ext_resource path="res://Scenes/Settings.tscn" type="PackedScene" id=27]
-[ext_resource path="res://Scripts/Timer.gd" type="Script" id=28]
+[ext_resource path="res://Images/godfather_office_background_TEX.jpeg" type="Texture" id=3]
+[ext_resource path="res://Images/F_tex.png" type="Texture" id=4]
+[ext_resource path="res://Images/F_pressed_tex.png" type="Texture" id=5]
+[ext_resource path="res://Images/F_hover_tex.png" type="Texture" id=6]
+[ext_resource path="res://Images/F_clickmask_tex.png" type="BitMap" id=7]
+[ext_resource path="res://Scripts/F_Button.gd" type="Script" id=8]
+[ext_resource path="res://Images/Gangster_usable_tex.png" type="Texture" id=9]
+[ext_resource path="res://Images/Gangster_pressed_tex.png" type="Texture" id=10]
+[ext_resource path="res://Images/Gangster_hover_tex.png" type="Texture" id=11]
+[ext_resource path="res://Images/Gangster_disabled_tex.png" type="Texture" id=12]
+[ext_resource path="res://Scripts/Gangster.gd" type="Script" id=13]
+[ext_resource path="res://Images/Enforcer_Usable_Tex.png" type="Texture" id=14]
+[ext_resource path="res://Images/Enforcer_Pressed_Tex.png" type="Texture" id=15]
+[ext_resource path="res://Images/Enforcer_Hover_Tex.png" type="Texture" id=16]
+[ext_resource path="res://Images/Enforcer_disabled_Tex.png" type="Texture" id=17]
+[ext_resource path="res://Scripts/Enforcer.gd" type="Script" id=18]
+[ext_resource path="res://Images/Framer_Usable_Tex.png" type="Texture" id=19]
+[ext_resource path="res://Images/src/Gangster pressed.png" type="Texture" id=20]
+[ext_resource path="res://Images/Framer_Disabled_Tex.png" type="Texture" id=21]
+[ext_resource path="res://Scripts/Framer.gd" type="Script" id=22]
+[ext_resource path="res://Images/Consigliere_Usable_Tex.png" type="Texture" id=23]
+[ext_resource path="res://Images/Consigliere_Disabled_Tex.png" type="Texture" id=24]
+[ext_resource path="res://Scripts/Consig.gd" type="Script" id=25]
+[ext_resource path="res://Images/Hitman_Usable_Tex.png" type="Texture" id=26]
+[ext_resource path="res://Images/Hitman_Disabled_Tex.png" type="Texture" id=27]
+[ext_resource path="res://Scripts/Hitman.gd" type="Script" id=28]
+[ext_resource path="res://Images/Godfather_Usabled_Tex.png" type="Texture" id=29]
+[ext_resource path="res://Images/Godfather_Disabled_Tex.png" type="Texture" id=30]
+[ext_resource path="res://Scripts/Godfather.gd" type="Script" id=31]
+[ext_resource path="res://Scripts/Wallet.gd" type="Script" id=32]
+[ext_resource path="res://Images/wallet_tex.png" type="Texture" id=33]
+[ext_resource path="res://Scenes/Settings.tscn" type="PackedScene" id=34]
+[ext_resource path="res://Scripts/Timer.gd" type="Script" id=35]
 
 [node name="ROOT" type="ViewportContainer" index="0"]
 
@@ -53,7 +60,26 @@ script = ExtResource( 1 )
 
 script = ExtResource( 2 )
 
-[node name="F" type="TextureButton" parent="." index="1" groups=[
+[node name="Background" type="TextureRect" parent="." index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1024.0
+margin_bottom = 720.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 0
+_sections_unfolded = [ "Hint", "Rect" ]
+
+[node name="F" type="TextureButton" parent="." index="2" groups=[
 "persistent",
 ]]
 
@@ -76,11 +102,11 @@ action_mode = 0
 enabled_focus_mode = 0
 shortcut = null
 group = null
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 5 )
-texture_click_mask = ExtResource( 6 )
-script = ExtResource( 7 )
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 5 )
+texture_hover = ExtResource( 6 )
+texture_click_mask = ExtResource( 7 )
+script = ExtResource( 8 )
 _sections_unfolded = [ "Focus" ]
 
 [node name="Gangster" type="TextureButton" parent="F" index="0" groups=[
@@ -108,11 +134,11 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 8 )
-texture_pressed = ExtResource( 9 )
-texture_hover = ExtResource( 10 )
-texture_disabled = ExtResource( 11 )
-script = ExtResource( 12 )
+texture_normal = ExtResource( 9 )
+texture_pressed = ExtResource( 10 )
+texture_hover = ExtResource( 11 )
+texture_disabled = ExtResource( 12 )
+script = ExtResource( 13 )
 _sections_unfolded = [ "Pause", "Textures" ]
 
 [node name="Gangster_Gang_Size" type="Label" parent="F/Gangster" index="0"]
@@ -180,11 +206,11 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 13 )
-texture_pressed = ExtResource( 14 )
-texture_hover = ExtResource( 15 )
-texture_disabled = ExtResource( 16 )
-script = ExtResource( 17 )
+texture_normal = ExtResource( 14 )
+texture_pressed = ExtResource( 15 )
+texture_hover = ExtResource( 16 )
+texture_disabled = ExtResource( 17 )
+script = ExtResource( 18 )
 _sections_unfolded = [ "Focus", "Pause", "Textures" ]
 
 [node name="Enforcer_Gang_Size" type="Label" parent="F/Enforcer" index="0"]
@@ -231,6 +257,7 @@ max_lines_visible = -1
 "persistent",
 ]]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -251,16 +278,57 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 18 )
-texture_pressed = ExtResource( 19 )
-texture_disabled = ExtResource( 20 )
-script = ExtResource( 21 )
+texture_normal = ExtResource( 19 )
+texture_pressed = ExtResource( 20 )
+texture_disabled = ExtResource( 21 )
+script = ExtResource( 22 )
 _sections_unfolded = [ "Focus", "Pause", "Textures" ]
+
+[node name="Framer_Gang_Size" type="Label" parent="F/Framer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 379.0
+margin_top = 56.0
+margin_right = 489.0
+margin_bottom = 76.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Framer_Cost_Txt" type="Label" parent="F/Framer" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 330.0
+margin_top = 18.0
+margin_right = 440.0
+margin_bottom = 38.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 [node name="Consig" type="TextureButton" parent="F" index="3" groups=[
 "persistent",
 ]]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -281,16 +349,57 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 18 )
-texture_pressed = ExtResource( 19 )
-texture_disabled = ExtResource( 20 )
-script = ExtResource( 22 )
+texture_normal = ExtResource( 23 )
+texture_pressed = ExtResource( 20 )
+texture_disabled = ExtResource( 24 )
+script = ExtResource( 25 )
 _sections_unfolded = [ "Focus", "Pause", "Size Flags", "Textures" ]
+
+[node name="Consig_Gang_Size" type="Label" parent="F/Consig" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 377.0
+margin_top = 53.0
+margin_right = 489.0
+margin_bottom = 73.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Consig_Cost_Txt" type="Label" parent="F/Consig" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 328.0
+margin_top = 18.0
+margin_right = 472.0
+margin_bottom = 36.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 [node name="Hitman" type="TextureButton" parent="F" index="4" groups=[
 "persistent",
 ]]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -311,16 +420,57 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 18 )
-texture_pressed = ExtResource( 19 )
-texture_disabled = ExtResource( 20 )
-script = ExtResource( 23 )
+texture_normal = ExtResource( 26 )
+texture_pressed = ExtResource( 20 )
+texture_disabled = ExtResource( 27 )
+script = ExtResource( 28 )
 _sections_unfolded = [ "Focus", "Pause", "Textures" ]
+
+[node name="Hitman_Gang_Size" type="Label" parent="F/Hitman" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 379.0
+margin_top = 53.0
+margin_right = 491.0
+margin_bottom = 74.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Hitman_Cost_Txt" type="Label" parent="F/Hitman" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 329.0
+margin_top = 17.0
+margin_right = 486.0
+margin_bottom = 38.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 [node name="Godfather" type="TextureButton" parent="F" index="5" groups=[
 "persistent",
 ]]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -341,23 +491,22 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 18 )
-texture_pressed = ExtResource( 19 )
-texture_disabled = ExtResource( 20 )
-script = ExtResource( 24 )
+texture_normal = ExtResource( 29 )
+texture_pressed = ExtResource( 20 )
+texture_disabled = ExtResource( 30 )
+script = ExtResource( 31 )
 _sections_unfolded = [ "Focus", "Pause", "Textures" ]
 
-[node name="WalletText" type="Label" parent="F" index="6"]
+[node name="Godfather_Gang_Size" type="Label" parent="F/Godfather" index="0"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 173.0
-margin_top = 493.0
-margin_right = 403.0
-margin_bottom = 563.0
+margin_left = 378.0
+margin_top = 52.0
+margin_right = 490.0
+margin_bottom = 77.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -367,10 +516,48 @@ size_flags_vertical = 4
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-script = ExtResource( 25 )
-__meta__ = {
-"_edit_lock_": true
-}
+
+[node name="Godfather_Cost_Txt" type="Label" parent="F/Godfather" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 330.0
+margin_top = 13.0
+margin_right = 488.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="WalletText" type="Label" parent="F" index="6"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 183.0
+margin_top = 363.0
+margin_right = 413.0
+margin_bottom = 433.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+script = ExtResource( 32 )
 
 [node name="WalletTexture" type="TextureRect" parent="F/WalletText" index="0"]
 
@@ -388,13 +575,13 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 26 )
+texture = ExtResource( 33 )
 stretch_mode = 0
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Margin" parent="." index="2" instance=ExtResource( 27 )]
+[node name="SettingsPanel" parent="." index="3" instance=ExtResource( 34 )]
 
 editor/display_folded = true
 margin_left = -647.0
@@ -402,15 +589,15 @@ margin_top = 101.0
 margin_right = -147.0
 margin_bottom = 501.0
 
-[node name="GlobalTimer" type="Timer" parent="." index="3"]
+[node name="GlobalTimer" type="Timer" parent="." index="4"]
 
 process_mode = 1
 wait_time = 1.0
 one_shot = false
 autostart = true
-script = ExtResource( 28 )
+script = ExtResource( 35 )
 
-[node name="buyMultiplier" type="TextureButton" parent="." index="4"]
+[node name="buyMultiplier" type="TextureButton" parent="." index="5"]
 
 visible = false
 anchor_left = 0.0
@@ -496,4 +683,3 @@ group = null
 [connection signal="timeout" from="GlobalTimer" to="F/Godfather" method="_on_GlobalTimer_timeout"]
 
 
-[editable path="Margin"]

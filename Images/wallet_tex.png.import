@@ -7,10 +7,10 @@ path="res://.import/wallet_tex.png-c6c1139e2f2ae0e7e33730148b11712a.stex"
 [deps]
 
 source_file="res://Images/wallet_tex.png"
-source_md5="ea298145dc117bf3530def4d1dc7c7f0"
+source_md5="fdf00b5f662fe2f5168e9f20538a188d"
 
 dest_files=[ "res://.import/wallet_tex.png-c6c1139e2f2ae0e7e33730148b11712a.stex" ]
-dest_md5="08174c9fcae483b495ebce81b12128d9"
+dest_md5="0d1c732cfaeb98e91ec086aaee01c5c6"
 
 [params]
 
