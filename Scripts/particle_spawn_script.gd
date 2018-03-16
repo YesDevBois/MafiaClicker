@@ -13,7 +13,6 @@ func _ready():
 
 func _process(delta):
 	if( !(is_emitting()) ):
-		print("#####DEBUG##### EMITTER TIMED OUT AND WAS REMOVED!")
 		( get_parent().particle_count ) -= 1
 		self.queue_free()
 	else:
