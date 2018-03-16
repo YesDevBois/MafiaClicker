@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Gangster_pressed_tex.png-8212c562a6f414b8b4f44c92e49642e3.stex"
+path="res://.import/Gangster_Pressed_Tex.png-86766b8eede683886a604b662e4df8bd.stex"
 
 [deps]
 
-source_file="res://Images/Gangster_pressed_tex.png"
-source_md5="25159dffdccd75cb9b06e313df6c9ce1"
+source_file="res://Images/Gangster_Pressed_Tex.png"
+source_md5="c2615fb3fc5894f6e6e40434c6108396"
 
-dest_files=[ "res://.import/Gangster_pressed_tex.png-8212c562a6f414b8b4f44c92e49642e3.stex" ]
-dest_md5="4129b3c40486b0d7268a3803162dbcfa"
+dest_files=[ "res://.import/Gangster_Pressed_Tex.png-86766b8eede683886a604b662e4df8bd.stex" ]
+dest_md5="958b5bd9776c79dc6b861392c1452475"
 
 [params]
 

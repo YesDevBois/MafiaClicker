@@ -7,10 +7,10 @@ path="res://.import/p1_respect_particle.png-f150845fa27e1b4e1d116d6b7e18fd65.ste
 [deps]
 
 source_file="res://Images/particles/p1_respect_particle.png"
-source_md5="2ce24950ef80c7491315a97f0952c4d4"
+source_md5="29457a9c5829066b2c04202a1ce92e33"
 
 dest_files=[ "res://.import/p1_respect_particle.png-f150845fa27e1b4e1d116d6b7e18fd65.stex" ]
-dest_md5="8e90cf9935ab7bc2387bb69e8379eb78"
+dest_md5="b050afaf7aa9ae96c1a1fcf6ea2d19b6"
 
 [params]
 

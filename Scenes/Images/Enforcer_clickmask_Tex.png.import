@@ -1,0 +1,18 @@
+[remap]
+
+importer="bitmap"
+type="BitMap"
+path="res://.import/Enforcer_clickmask_Tex.png-cafe3f9febb9eb32211e07f2c764672b.res"
+
+[deps]
+
+source_file="res://Scenes/Images/Enforcer_clickmask_Tex.png"
+source_md5="692c3d582af331867e0b8b31fb31a335"
+
+dest_files=[ "res://.import/Enforcer_clickmask_Tex.png-cafe3f9febb9eb32211e07f2c764672b.res" ]
+dest_md5="69a6cda1538ff5693dc136f9559c5248"
+
+[params]
+
+create_from=0
+threshold=0.5

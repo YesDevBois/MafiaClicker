@@ -17,8 +17,6 @@ func _ready():
 	costmultiplier = 1.0 + (amount*0.1)
 	cost = basecost*costmultiplier
 	
-	print(amount)
-	
 	Gangster_Amount_txt.set_text(str(amount))
 	Gangster_Cost_txt.set_text(str(cost))
 
@@ -37,7 +35,7 @@ func _on_Gangster_pressed():
 	cost = basecost*costmultiplier
 	Gangster_Amount_txt.set_text(str(amount))
 	Gangster_Cost_txt.set_text(str(cost))
-	print("Gangsters: ", amount) 
+	get_parent().play_click_effect()
 
 #gets the enable signal from the main button based on wallet amount
 func _on_F_enable_button(me, boolval):
