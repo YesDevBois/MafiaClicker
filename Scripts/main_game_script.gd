@@ -1,8 +1,8 @@
 extends Control
 
 const GAME_ICON_PATH = "res://Images/src/mafia_clicker_icon.png"
-var game_icon = preload(GAME_ICON_PATH)
-const SAVE_PATH = "res://Saves/save.json"
+var game_icon = load(GAME_ICON_PATH)
+const SAVE_PATH = "res://save.json"
 
 # saved period for keeping track of time
 var time_out_period = 0

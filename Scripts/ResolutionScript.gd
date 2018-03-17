@@ -38,7 +38,7 @@ func check_resolution():
 func _ready():
 	add_item("1024x720",0)
 	add_item("1600x900",1)
-	add_item("1980x1080",2)
+	add_item("1920x1080",2)
 	
 	select(0)
 	previous_res_index = get_item_id(get_selected_id())

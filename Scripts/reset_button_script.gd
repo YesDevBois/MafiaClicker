@@ -1,6 +1,6 @@
 extends Button
 
-const SAVE_PATH = "res://Saves/save.json"
+const SAVE_PATH = "res://save.json"
 
 func _ready():
 	set_text("Press Here!")
@@ -15,7 +15,7 @@ func delete_game():
 		return
 	else:
 		var temp_dir = Directory.new()
-		temp_dir.remove("res://Saves/save.json")
+		temp_dir.remove(SAVE_PATH)
 		print("Game was deleted.")
 		
 	saved_game.close()

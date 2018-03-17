@@ -13,6 +13,7 @@ var window_size = OS.get_window_size()
 func _ready():
 	# sets the position of the games into the middle of the computer screen
 	OS.set_window_position((screen_size*0.5) - (window_size*0.5))
+	
 
 func _input(event):
 	var s_key_pressed = event.is_action_pressed("ui_s_key")
@@ -20,10 +21,7 @@ func _input(event):
 	if(s_key_pressed):
 		popup_open = !(popup_open)
 		if(popup_open == true):
-			print("The settings have been opened!")
 			get_node("Settings_Panel").show()
 		else:
-			print("The settings have been closed!")
 			get_node("Settings_Panel").hide()
-		pass
 		
