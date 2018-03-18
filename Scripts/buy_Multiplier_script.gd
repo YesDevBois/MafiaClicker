@@ -47,6 +47,9 @@ func _ready():
 	set_textures(0)
 	CURRENT_BUTTON_STATE[0]
 
+func get_button_state():
+	return CURRENT_BUTTON_STATE[index]
+
 func _on_buyMultiplier_pressed():
 	
 	if( (index > MAX_INDEX) or (index < MIN_INDEX) ):

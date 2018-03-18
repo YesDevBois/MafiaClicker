@@ -1,7 +1,5 @@
 extends TextureButton
 
-### REMOTE
-
 var amount = 0
 var productionmultiplier = 1000
 var costmultiplier
@@ -43,6 +41,7 @@ func price_calc():
 	F_button.set_price( F_button.get_buy_multi_cost(self) )
 	amount += F_button.get_buy_multi_amt(self)
 	cost = formulate_cost(amount)
+	txt_update()
 	get_parent().play_click_effect()
 
 func _on_F_enable_button(me, boolval):

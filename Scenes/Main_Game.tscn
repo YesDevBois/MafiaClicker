@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=2]
+[gd_scene load_steps=53 format=2]
 
 [ext_resource path="res://Scripts/main_game_script.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/load_game_script.gd" type="Script" id=2]
@@ -40,16 +40,128 @@
 [ext_resource path="res://Audio/finger_snap_2.wav" type="AudioStream" id=38]
 [ext_resource path="res://Audio/Godfather_Waltz.wav" type="AudioStream" id=39]
 [ext_resource path="res://Scripts/particle_position_script.gd" type="Script" id=40]
-[ext_resource path="res://Scripts/global_time_script.gd" type="Script" id=41]
-[ext_resource path="res://Scripts/settings_script.gd" type="Script" id=42]
-[ext_resource path="res://Scenes/SFX_Volume_Slider_script.gd" type="Script" id=43]
-[ext_resource path="res://Scenes/Scripts/sfx_label.gd" type="Script" id=44]
-[ext_resource path="res://Scripts/music_slider_script.gd" type="Script" id=45]
-[ext_resource path="res://Scripts/ResolutionScript.gd" type="Script" id=46]
-[ext_resource path="res://Scripts/ConfirmationDialog.gd" type="Script" id=47]
-[ext_resource path="res://Scripts/reset_button_script.gd" type="Script" id=48]
-[ext_resource path="res://Scripts/reset_label_script.gd" type="Script" id=49]
-[ext_resource path="res://Scripts/quit_game_button.gd" type="Script" id=50]
+[ext_resource path="res://Scripts/notifier_script.gd" type="Script" id=41]
+[ext_resource path="res://Scripts/global_time_script.gd" type="Script" id=42]
+[ext_resource path="res://Scripts/settings_script.gd" type="Script" id=43]
+[ext_resource path="res://Scripts/SFX_Volume_Slider_script.gd" type="Script" id=44]
+[ext_resource path="res://Scripts/sfx_label.gd" type="Script" id=45]
+[ext_resource path="res://Scripts/music_slider_script.gd" type="Script" id=46]
+[ext_resource path="res://Scripts/reset_label_script.gd" type="Script" id=47]
+[ext_resource path="res://Scripts/quit_game_button.gd" type="Script" id=48]
+[ext_resource path="res://Scripts/LowProcessor_Script.gd" type="Script" id=49]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends OptionButton
+
+var resolution_x = [800, 1024, 1600, 1920]
+var resolution_y = [600, 720, 900, 1080]
+var current_resolution = Vector2(0, 0)
+var previous_res_index 
+var current_res_index
+var Settings_Panel = get_parent()
+
+func change_resolution(idx):
+	set_res_var(idx)
+	print(\"The current resolution is: \" + str(current_resolution))
+	OS.set_window_size(current_resolution)
+
+func get_res_var():
+	return current_resolution
+
+func set_res_var(index):
+	current_resolution = Vector2(resolution_x[index], resolution_y[index])
+
+# checks the resolution to see if it needs to be changed relative to the
+# dropdown selection by player
+func check_resolution():
+	# gets current selected resolution id from drop-down list
+	current_res_index = get_item_id(get_selected_id())
+	
+	# if the current selected resolution does not equal the default resolution,
+	# then we need to branch some logic
+	if(current_res_index == previous_res_index):
+		return
+	else:
+		# change the resolution and pass the selected resolution index variable away
+		change_resolution(current_res_index)
+		# check if the selection is okay
+		get_node(\"ConfirmationDialog\").show()
+		get_tree().paused = true
+
+func _ready():
+	add_item(\"800x600\",0)
+	add_item(\"1024x720\",1)
+	add_item(\"1600x900\",2)
+	add_item(\"1980x1080\",3)
+	
+	select(1)
+	previous_res_index = get_item_id(get_selected_id())
+	current_res_index = get_item_id(get_selected_id())
+	change_resolution(current_res_index)
+
+func _process(delta):
+	if(is_visible_in_tree()):
+		check_resolution()"
+
+[sub_resource type="GDScript" id=2]
+
+script/source = "extends ConfirmationDialog
+
+var cancel_button = get_cancel()
+onready var resolution_button = get_parent()
+
+func ok_wrapper():
+	print(\"Made it to the OKAY wrapper.\")
+	resolution_button.change_resolution(resolution_button.current_res_index)
+	resolution_button.previous_res_index = resolution_button.current_res_index
+	#Root.reorient_settings_panel(screen_resolution)
+	get_tree().paused = false
+func cancel_wrapper():
+	# changing variables back since they are changed every update in the
+	# ResolutionButton _process function
+	resolution_button.change_resolution(resolution_button.previous_res_index)
+	resolution_button.current_res_index = resolution_button.previous_res_index
+	resolution_button.select(resolution_button.previous_res_index)
+	print(\"Made it to the CANCEL wrapper.\")
+	get_tree().paused = false
+
+func _ready():
+	dialog_hide_on_ok = true
+	dialog_text = \"Is this resolution okay?\"
+	cancel_button.connect(\"pressed\", self, \"cancel_wrapper\")
+
+func _on_ConfirmationDialog_confirmed():
+	ok_wrapper()"
+
+[sub_resource type="GDScript" id=3]
+
+script/source = "extends Button
+
+const SAVE_PATH = \"res://Saves/save.json\"
+
+func _ready():
+	set_text(\"Press Here!\")
+
+func delete_game():
+	var saved_game = File.new()
+	var game_save_exists = ( saved_game.file_exists(SAVE_PATH) )
+	
+	if(game_save_exists == false):
+		print(\"Game was not deleted.\")
+		saved_game.close()
+		return
+	else:
+		var temp_dir = Directory.new()
+		temp_dir.remove(\"res://Saves/save.json\")
+		print(\"Game was deleted.\")
+		
+	saved_game.close()
+
+func _on_Button_pressed():
+	delete_game()
+	pass
+"
 
 [node name="ROOT" type="ViewportContainer" index="0"]
 
@@ -107,6 +219,7 @@ margin_right = 380.0
 margin_bottom = 646.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
+focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -700,17 +813,20 @@ __meta__ = {
 
 script = ExtResource( 40 )
 
+[node name="notifier" type="Node2D" parent="F" index="11"]
+
+script = ExtResource( 41 )
+
 [node name="GlobalTimer" type="Timer" parent="." index="4"]
 
 process_mode = 1
 wait_time = 1.0
 one_shot = false
 autostart = true
-script = ExtResource( 41 )
+script = ExtResource( 42 )
 
 [node name="SettingsPanel" type="MarginContainer" parent="." index="5"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -726,7 +842,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-script = ExtResource( 42 )
+script = ExtResource( 43 )
 _sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Pause" ]
 
 [node name="Settings_Panel" type="PopupPanel" parent="SettingsPanel" index="0"]
@@ -753,7 +869,6 @@ __meta__ = {
 
 [node name="SFX_Volume_Slider" type="HSlider" parent="SettingsPanel/Settings_Panel" index="0"]
 
-editor/display_folded = true
 anchor_left = 1.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -770,7 +885,7 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 0
 min_value = -80.0
-max_value = 24.0
+max_value = 10.0
 step = 2.0
 page = 0.0
 value = 0.0
@@ -780,7 +895,7 @@ editable = true
 tick_count = 0
 ticks_on_borders = false
 focus_mode = 2
-script = ExtResource( 43 )
+script = ExtResource( 44 )
 _sections_unfolded = [ "Anchor", "Rect" ]
 __meta__ = {
 "_edit_lock_": true
@@ -806,7 +921,7 @@ text = "Sound Effects Volume: "
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-script = ExtResource( 44 )
+script = ExtResource( 45 )
 _sections_unfolded = [ "Rect" ]
 __meta__ = {
 "_edit_lock_": true
@@ -931,7 +1046,7 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 0
 min_value = -80.0
-max_value = 24.0
+max_value = 10.0
 step = 2.0
 page = 0.0
 value = 0.0
@@ -941,7 +1056,7 @@ editable = true
 tick_count = 0
 ticks_on_borders = false
 focus_mode = 2
-script = ExtResource( 45 )
+script = ExtResource( 46 )
 _sections_unfolded = [ "Rect" ]
 __meta__ = {
 "_edit_lock_": true
@@ -999,7 +1114,7 @@ flat = false
 align = 0
 items = [  ]
 selected = -1
-script = ExtResource( 46 )
+script = SubResource( 1 )
 _sections_unfolded = [ "Anchor", "Pause" ]
 __meta__ = {
 "_edit_lock_": true
@@ -1050,7 +1165,7 @@ popup_exclusive = true
 window_title = "Resolution Change!"
 resizable = false
 dialog_hide_on_ok = true
-script = ExtResource( 47 )
+script = SubResource( 2 )
 _sections_unfolded = [ "Margin", "Popup" ]
 
 [node name="Reset_Button" type="Button" parent="SettingsPanel/Settings_Panel" index="2"]
@@ -1077,7 +1192,7 @@ shortcut = null
 group = null
 flat = false
 align = 1
-script = ExtResource( 48 )
+script = SubResource( 3 )
 _sections_unfolded = [ "Anchor" ]
 __meta__ = {
 "_edit_lock_": true
@@ -1102,7 +1217,7 @@ size_flags_vertical = 4
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-script = ExtResource( 49 )
+script = ExtResource( 47 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -1130,11 +1245,58 @@ shortcut = null
 group = null
 flat = false
 align = 1
-script = ExtResource( 50 )
+script = ExtResource( 48 )
 _sections_unfolded = [ "Anchor" ]
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="LowProcessor_Box" type="CheckBox" parent="SettingsPanel/Settings_Panel" index="4"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 381.0
+margin_top = 198.0
+margin_right = 405.0
+margin_bottom = 222.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+flat = false
+align = 0
+script = ExtResource( 49 )
+
+[node name="LowProcessor_Txt" type="Label" parent="SettingsPanel/Settings_Panel/LowProcessor_Box" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -156.0
+margin_top = 5.0
+margin_right = -20.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Low Processor Mode:"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 [connection signal="pressed" from="buyMultiplier" to="buyMultiplier" method="_on_buyMultiplier_pressed"]
 
@@ -1180,6 +1342,8 @@ __meta__ = {
 
 [connection signal="confirmed" from="F/AFK_Respect_Dialog" to="F/AFK_Respect_Dialog" method="_on_AFK_Respect_Dialog_confirmed"]
 
+[connection signal="timeout" from="GlobalTimer" to="." method="_on_GlobalTimer_timeout"]
+
 [connection signal="timeout" from="GlobalTimer" to="F/Gangster" method="_on_GlobalTimer_timeout"]
 
 [connection signal="timeout" from="GlobalTimer" to="F/Enforcer" method="_on_GlobalTimer_timeout"]
@@ -1191,8 +1355,6 @@ __meta__ = {
 [connection signal="timeout" from="GlobalTimer" to="F/Hitman" method="_on_GlobalTimer_timeout"]
 
 [connection signal="timeout" from="GlobalTimer" to="F/Godfather" method="_on_GlobalTimer_timeout"]
-
-[connection signal="timeout" from="GlobalTimer" to="." method="_on_GlobalTimer_timeout"]
 
 [connection signal="value_changed" from="SettingsPanel/Settings_Panel/SFX_Volume_Slider" to="SettingsPanel/Settings_Panel/SFX_Volume_Slider" method="_on_SFX_Volume_Slider_value_changed"]
 
@@ -1207,5 +1369,7 @@ __meta__ = {
 [connection signal="pressed" from="SettingsPanel/Settings_Panel/Reset_Button" to="SettingsPanel/Settings_Panel/Reset_Button" method="_on_Button_pressed"]
 
 [connection signal="pressed" from="SettingsPanel/Settings_Panel/Hard_Quit_Button" to="SettingsPanel/Settings_Panel/Hard_Quit_Button" method="_on_Hard_Quit_Button_pressed"]
+
+[connection signal="toggled" from="SettingsPanel/Settings_Panel/LowProcessor_Box" to="SettingsPanel/Settings_Panel/LowProcessor_Box" method="_on_LowProcessor_Box_toggled"]
 
 

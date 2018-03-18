@@ -4,7 +4,7 @@ signal enable_button
 
 onready var buy_multiplier_node = get_parent().get_node("buyMultiplier")
 onready var buy_multiplier_index = buy_multiplier_node.index
-onready var BUY_MULTI_STATE = buy_multiplier_node.CURRENT_BUTTON_STATE
+onready var BUY_MULTI_STATE = buy_multiplier_node.get_button_state()
 
 var savetime = 0
 var wallet = 0.0
@@ -32,7 +32,7 @@ func _ready():
 	#unix time is used to calculate how long the game has been closed
 	update_respect(savetime, OS.get_unix_time())
 	
-	BUY_MULTI_STATE[buy_multiplier_index]
+	BUY_MULTI_STATE = buy_multiplier_node.get_button_state()
 	
 	# This allows spacebar to be used for only incrementing F
 	set_focus_mode(FOCUS_ALL)
@@ -135,7 +135,7 @@ func _input(event):
 	# "is_action_pressed" action. Putting the operation there would, in effect,
 	# give two respect instead of one. Which we do not want.
 	if(event.is_action_released("key_spacebar")):
-		wallet += (pow(10, 3)) - 1
+		wallet += (pow(10, 6)) - 1
 		print("#####DEBUG##### RESPECT INCREASED BY ONE MILLION! WALLET IS NOW: " + str(wallet))
 		return
 
@@ -163,6 +163,10 @@ func set_price(value):
 	return price
 func get_price():
 	return price
+func set_wallet(value):
+	wallet = value
+func get_wallet():
+	return wallet
 
 # calculate the COST a button class is to be bought relative to the multiplier
 func get_buy_multi_cost(button_node):
@@ -184,20 +188,20 @@ func get_buy_multi_amt(button_node):
 	var temp_cost = 0.0
 	var iteration = 0
 	
-	BUY_MULTI_STATE[buy_multiplier_index] = buy_multiplier_node.CURRENT_BUTTON_STATE[buy_multiplier_node.index]
-	#print("BUY_MULTI_STATE := ", BUY_MULTI_STATE[buy_multiplier_index])
+	BUY_MULTI_STATE = buy_multiplier_node.get_button_state()
+	#print("BUY_MULTI_STATE := ", BUY_MULTI_STATE)
 	
-	if(BUY_MULTI_STATE[buy_multiplier_index] == 0):
+	if(BUY_MULTI_STATE == 0):
 		
 		return 1
 		
 	else:
 		
-		while(temp_cost <= (wallet * buy_multiplier_node.CURRENT_BUTTON_STATE[buy_multiplier_index]) ):
+		while(temp_cost <= (wallet * BUY_MULTI_STATE) ):
 			
 			temp_cost += button_node.formulate_cost(button_node.amount+iteration)
 			
-			if(temp_cost < (wallet * buy_multiplier_node.CURRENT_BUTTON_STATE[buy_multiplier_index])):
+			if(temp_cost < (wallet * BUY_MULTI_STATE)):
 				iteration += 1
 				continue
 			else:
@@ -212,44 +216,45 @@ func _on_Gangster_respect_from_gangsters(respect):
 func _on_Gangster_pressed():
 	Gangster.price_calc()
 	price = get_price()
-	wallet -= price
+	set_wallet(wallet - price)
 
 func _on_Enforcer_respect_from_enforcers(respect):
 	wallet += respect
 func _on_Enforcer_pressed():
 	Enforcer.price_calc()
 	price = get_price()
-	wallet -= Enforcer.cost
+	set_wallet(wallet - price)
 
 func _on_Framer_respect_from_framers(respect):
 	wallet += respect
 func _on_Framer_pressed():
 	Framer.price_calc()
 	price = get_price()
-	wallet -= Framer.cost
+	set_wallet(wallet - price)
 
 func _on_Consig_respect_from_consigs(respect):
 	wallet += respect
 func _on_Consig_pressed():
 	Consig.price_calc()
 	price = get_price()
-	wallet -= Consig.cost
+	set_wallet(wallet - price)
 
 func _on_Hitman_respect_from_hitmen(respect):
 	wallet += respect
 func _on_Hitman_pressed():
 	Hitman.price_calc()
 	price = get_price()
-	wallet -= Hitman.cost
+	set_wallet(wallet - price)
 
 func _on_Godfather_respect_from_godfathers(respect):
 	wallet += respect
 func _on_Godfather_pressed():
 	Godfather.price_calc()
 	price = get_price()
-	wallet -= Godfather.cost
+	set_wallet(wallet - price)
 
 func _on_buyMultiplier_pressed():
+	BUY_MULTI_STATE = buy_multiplier_node.get_button_state()
 	play_click_effect()
 
 #updates wallet to reflect the amount of respect earned while away

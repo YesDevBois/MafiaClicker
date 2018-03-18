@@ -1,7 +1,5 @@
 extends TextureButton
 
-### REMOTE
-
 var amount = 0
 var productionmultiplier = 100
 var costmultiplier
