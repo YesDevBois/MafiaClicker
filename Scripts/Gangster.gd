@@ -4,7 +4,7 @@ var amount = 0
 var productionmultiplier = 0.1
 var costmultiplier
 var basecost = 10
-var cost
+var cost = 0.0
 var respect
 
 signal respect_from_gangsters
@@ -43,7 +43,9 @@ func txt_update():
 
 func price_calc():
 	F_button.set_price( F_button.get_buy_multi_cost(self) )
+	print(F_button.set_price( F_button.get_buy_multi_cost(self) ))
 	amount += F_button.get_buy_multi_amt(self)
+	print(amount)
 	cost = formulate_cost(amount)
 	txt_update()
 	F_button.play_click_effect()

@@ -12,12 +12,12 @@ var lifetime_respect = 0.0
 var first_open = true
 var price = 0
 
-var gangster_unlock = false
-var enforcer_unlock = false
-var consig_unlock = false
-var framer_unlock = false
-var hitman_unlock = false
-var godfather_unlock = false
+var gangster_unlocked = false
+var enforcer_unlocked = false
+var consig_unlocked = false
+var framer_unlocked = false
+var hitman_unlocked = false
+var godfather_unlocked = false
 
 onready var Gangster = get_node("Gangster")
 onready var Enforcer = get_node("Enforcer")
@@ -69,46 +69,48 @@ func _ready():
 #enables if wallet >= button.cost, disables if not
 func _process(delta):
 	
-	if(wallet >= Gangster.cost):
-		Gangster.show()
-		gangster_unlock = true
+	var current_wallet = get_wallet()
+	
+	if(current_wallet >= Gangster.cost):
 		enable_gangster(true)
-	elif((wallet < Gangster.cost) and (gangster_unlock == true)):
+		Gangster.show()
+		gangster_unlocked = true
+	elif((current_wallet < Gangster.cost) and (gangster_unlocked == true)):
 		enable_gangster(false)
 	
-	if(wallet >= Enforcer.cost):
+	if(current_wallet >= Enforcer.cost):
 		Enforcer.show()
 		enable_enforcer(true)
-		enforcer_unlock = true
-	elif((wallet < Enforcer.cost) and (enforcer_unlock == true)):
+		enforcer_unlocked = true
+	elif((current_wallet < Enforcer.cost) and (enforcer_unlocked == true)):
 		enable_enforcer(false)
 	
-	if(wallet >= Framer.cost):
+	if(current_wallet >= Framer.cost):
 		Framer.show()
 		enable_framer(true)
-		framer_unlock = true
-	elif((wallet < Framer.cost) and (framer_unlock == true)):
+		framer_unlocked = true
+	elif((current_wallet < Framer.cost) and (framer_unlocked == true)):
 		enable_framer(false)
 		
-	if(wallet >= Consig.cost):
+	if(current_wallet >= Consig.cost):
 		Consig.show()
 		enable_consig(true)
-		consig_unlock = true
-	elif((wallet < Consig.cost) and (consig_unlock == true)):
+		consig_unlocked = true
+	elif((current_wallet < Consig.cost) and (consig_unlocked == true)):
 		enable_consig(false)
 		
-	if(wallet >= Hitman.cost):
+	if(current_wallet >= Hitman.cost):
 		Hitman.show()
 		enable_hitman(true)
-		hitman_unlock = true
-	elif((wallet < Hitman.cost) and (hitman_unlock == true)):
+		hitman_unlocked = true
+	elif((current_wallet < Hitman.cost) and (hitman_unlocked == true)):
 		enable_hitman(false)
 	
-	if(wallet >= Godfather.cost):
+	if(current_wallet >= Godfather.cost):
 		Godfather.show()
 		enable_godfather(true)
-		godfather_unlock = true
-	elif((wallet < Godfather.cost) and (godfather_unlock == true)):
+		godfather_unlocked = true
+	elif((current_wallet < Godfather.cost) and (godfather_unlocked == true)):
 		enable_godfather(false)
 
 func play_click_effect():
@@ -116,10 +118,9 @@ func play_click_effect():
 
 #increases respect count everytime you click the F button
 func _on_F_pressed():
-	wallet += 1
+	set_wallet(wallet + 1)
 	play_click_effect()
 	get_node("particle_pos").emit_on_mPress()
-	print(wallet)
 #can also increase wallet with the space bar 
 func _input(event):
 	
@@ -134,10 +135,9 @@ func _input(event):
 	# defined on the button press, AND THEN whatever is defined under the
 	# "is_action_pressed" action. Putting the operation there would, in effect,
 	# give two respect instead of one. Which we do not want.
-	if(event.is_action_released("key_spacebar")):
+	if(event.is_action_released("ui_accept")):
 		wallet += (pow(10, 6)) - 1
 		print("#####DEBUG##### RESPECT INCREASED BY ONE MILLION! WALLET IS NOW: " + str(wallet))
-		return
 
 #signals that enable their respective buttons
 func enable_gangster(boolval):
@@ -189,7 +189,6 @@ func get_buy_multi_amt(button_node):
 	var iteration = 0
 	
 	BUY_MULTI_STATE = buy_multiplier_node.get_button_state()
-	#print("BUY_MULTI_STATE := ", BUY_MULTI_STATE)
 	
 	if(BUY_MULTI_STATE == 0):
 		
@@ -201,7 +200,7 @@ func get_buy_multi_amt(button_node):
 			
 			temp_cost += button_node.formulate_cost(button_node.amount+iteration)
 			
-			if(temp_cost < (wallet * BUY_MULTI_STATE)):
+			if(temp_cost <= (wallet * BUY_MULTI_STATE)):
 				iteration += 1
 				continue
 			else:
@@ -212,42 +211,42 @@ func get_buy_multi_amt(button_node):
 #signal recievers for updating wallet based on the production of the buttons
 #of the buttons and if anymore buttons are bought
 func _on_Gangster_respect_from_gangsters(respect):
-	wallet += respect
+	set_wallet( respect + get_wallet() )
 func _on_Gangster_pressed():
 	Gangster.price_calc()
 	price = get_price()
 	set_wallet(wallet - price)
 
 func _on_Enforcer_respect_from_enforcers(respect):
-	wallet += respect
+	set_wallet( respect + get_wallet() )
 func _on_Enforcer_pressed():
 	Enforcer.price_calc()
 	price = get_price()
 	set_wallet(wallet - price)
 
 func _on_Framer_respect_from_framers(respect):
-	wallet += respect
+	set_wallet( respect + get_wallet() )
 func _on_Framer_pressed():
 	Framer.price_calc()
 	price = get_price()
 	set_wallet(wallet - price)
 
 func _on_Consig_respect_from_consigs(respect):
-	wallet += respect
+	set_wallet( respect + get_wallet() )
 func _on_Consig_pressed():
 	Consig.price_calc()
 	price = get_price()
 	set_wallet(wallet - price)
 
 func _on_Hitman_respect_from_hitmen(respect):
-	wallet += respect
+	set_wallet( respect + get_wallet() )
 func _on_Hitman_pressed():
 	Hitman.price_calc()
 	price = get_price()
 	set_wallet(wallet - price)
 
 func _on_Godfather_respect_from_godfathers(respect):
-	wallet += respect
+	set_wallet( respect + get_wallet() )
 func _on_Godfather_pressed():
 	Godfather.price_calc()
 	price = get_price()
@@ -261,15 +260,15 @@ func _on_buyMultiplier_pressed():
 func update_respect(savetime, loadtime):
 	var nodes = get_children()
 	var afkrespect = 0.0
+	var current_wallet = get_wallet()
 	
-	# we subtract nodes.size() by two, because the last two children of "F" are not buttons
-	# so they do not have the variables we need to do the afkrespect calculation
-	for i in range(0, GAME_BUTTONS ):
-		afkrespect += ( (nodes[i].productionmultiplier) * (nodes[i].amount) ) * (loadtime-savetime)
+	for i in range(0, GAME_BUTTONS):
+		afkrespect += (nodes[i].productionmultiplier) * (nodes[i].amount)
 	
-	wallet += afkrespect
+	afkrespect *= (loadtime - savetime)
+	set_wallet(current_wallet + afkrespect)
 	
-	if(first_open):
+	if(get_wallet() == 0):
 		return
 	else:
 		get_node("AFK_Respect_Dialog").activate_dialog(true, afkrespect)

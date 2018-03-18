@@ -44,6 +44,8 @@ func set_textures(idx):
 	set_hover_texture(buy_multi_hover_arr[idx])
 
 func _ready():
+	# This allows spacebar to be used to for only incrementing F
+	set_focus_mode(FOCUS_NONE)
 	set_textures(0)
 	CURRENT_BUTTON_STATE[0]
 
