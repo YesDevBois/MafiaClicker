@@ -3,12 +3,12 @@
 [ext_resource path="res://Scripts/main_game_script.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/load_game_script.gd" type="Script" id=2]
 [ext_resource path="res://Images/godfather_office_background_TEX.jpeg" type="Texture" id=3]
-[ext_resource path="res://Images/multiplier_button/buy_multiplier_1_Usable.png" type="Texture" id=4]
-[ext_resource path="res://Scripts/buy_Multiplier_script.gd" type="Script" id=5]
-[ext_resource path="res://Images/F_tex.png" type="Texture" id=6]
-[ext_resource path="res://Images/F_pressed_tex.png" type="Texture" id=7]
-[ext_resource path="res://Images/F_hover_tex.png" type="Texture" id=8]
-[ext_resource path="res://Images/F_clickmask_tex.png" type="BitMap" id=9]
+[ext_resource path="res://Scenes/Background_Script.gd" type="Script" id=4]
+[ext_resource path="res://Images/multiplier_button/buy_multiplier_1_Usable.png" type="Texture" id=5]
+[ext_resource path="res://Scripts/buy_Multiplier_script.gd" type="Script" id=6]
+[ext_resource path="res://Images/F_tex.png" type="Texture" id=7]
+[ext_resource path="res://Images/F_pressed_tex.png" type="Texture" id=8]
+[ext_resource path="res://Images/F_hover_tex.png" type="Texture" id=9]
 [ext_resource path="res://Scripts/F_button_script.gd" type="Script" id=10]
 [ext_resource path="res://Images/Gangster_usable_tex.png" type="Texture" id=11]
 [ext_resource path="res://Images/Gangster_Pressed_Tex.png" type="Texture" id=12]
@@ -46,94 +46,12 @@
 [ext_resource path="res://Scripts/SFX_Volume_Slider_script.gd" type="Script" id=44]
 [ext_resource path="res://Scripts/sfx_label.gd" type="Script" id=45]
 [ext_resource path="res://Scripts/music_slider_script.gd" type="Script" id=46]
-[ext_resource path="res://Scripts/reset_button_script.gd" type="Script" id=47]
-[ext_resource path="res://Scripts/reset_label_script.gd" type="Script" id=48]
-[ext_resource path="res://Scripts/quit_game_button.gd" type="Script" id=49]
-[ext_resource path="res://Scripts/LowProcessor_Script.gd" type="Script" id=50]
-
-[sub_resource type="GDScript" id=1]
-
-script/source = "extends OptionButton
-
-var resolution_x = [800, 1024, 1600, 1920]
-var resolution_y = [600, 720, 900, 1080]
-var current_resolution = Vector2(0, 0)
-var previous_res_index 
-var current_res_index
-var Settings_Panel = get_parent()
-
-func change_resolution(idx):
-	set_res_var(idx)
-	print(\"The current resolution is: \" + str(current_resolution))
-	OS.set_window_size(current_resolution)
-
-func get_res_var():
-	return current_resolution
-
-func set_res_var(index):
-	current_resolution = Vector2(resolution_x[index], resolution_y[index])
-
-# checks the resolution to see if it needs to be changed relative to the
-# dropdown selection by player
-func check_resolution():
-	# gets current selected resolution id from drop-down list
-	current_res_index = get_item_id(get_selected_id())
-	
-	# if the current selected resolution does not equal the default resolution,
-	# then we need to branch some logic
-	if(current_res_index == previous_res_index):
-		return
-	else:
-		# change the resolution and pass the selected resolution index variable away
-		change_resolution(current_res_index)
-		# check if the selection is okay
-		get_node(\"ConfirmationDialog\").show()
-		get_tree().paused = true
-
-func _ready():
-	add_item(\"800x600\",0)
-	add_item(\"1024x720\",1)
-	add_item(\"1600x900\",2)
-	add_item(\"1980x1080\",3)
-	
-	select(1)
-	previous_res_index = get_item_id(get_selected_id())
-	current_res_index = get_item_id(get_selected_id())
-	change_resolution(current_res_index)
-
-func _process(delta):
-	if(is_visible_in_tree()):
-		check_resolution()"
-
-[sub_resource type="GDScript" id=2]
-
-script/source = "extends ConfirmationDialog
-
-var cancel_button = get_cancel()
-onready var resolution_button = get_parent()
-
-func ok_wrapper():
-	print(\"Made it to the OKAY wrapper.\")
-	resolution_button.change_resolution(resolution_button.current_res_index)
-	resolution_button.previous_res_index = resolution_button.current_res_index
-	#Root.reorient_settings_panel(screen_resolution)
-	get_tree().paused = false
-func cancel_wrapper():
-	# changing variables back since they are changed every update in the
-	# ResolutionButton _process function
-	resolution_button.change_resolution(resolution_button.previous_res_index)
-	resolution_button.current_res_index = resolution_button.previous_res_index
-	resolution_button.select(resolution_button.previous_res_index)
-	print(\"Made it to the CANCEL wrapper.\")
-	get_tree().paused = false
-
-func _ready():
-	dialog_hide_on_ok = true
-	dialog_text = \"Is this resolution okay?\"
-	cancel_button.connect(\"pressed\", self, \"cancel_wrapper\")
-
-func _on_ConfirmationDialog_confirmed():
-	ok_wrapper()"
+[ext_resource path="res://Scripts/ResolutionScript.gd" type="Script" id=47]
+[ext_resource path="res://Scripts/ConfirmationDialog.gd" type="Script" id=48]
+[ext_resource path="res://Scripts/reset_button_script.gd" type="Script" id=49]
+[ext_resource path="res://Scripts/reset_label_script.gd" type="Script" id=50]
+[ext_resource path="res://Scripts/quit_game_button.gd" type="Script" id=51]
+[ext_resource path="res://Scripts/LowProcessor_Script.gd" type="Script" id=52]
 
 [node name="ROOT" type="ViewportContainer" index="0"]
 
@@ -141,10 +59,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = -2.0
-margin_top = -1.0
-margin_right = 1022.0
-margin_bottom = 719.0
+margin_right = 1024.0
+margin_bottom = 720.0
+grow_horizontal = 0
+grow_vertical = 0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -154,7 +72,6 @@ size_flags_vertical = 1
 stretch = false
 stretch_shrink = 1
 script = ExtResource( 1 )
-_sections_unfolded = [ "Rect" ]
 
 [node name="THE LOADNODE" type="Node" parent="." index="0"]
 
@@ -177,6 +94,7 @@ size_flags_vertical = 1
 texture = ExtResource( 3 )
 expand = true
 stretch_mode = 0
+script = ExtResource( 4 )
 _sections_unfolded = [ "Hint", "Rect" ]
 
 [node name="buyMultiplier" type="TextureButton" parent="." index="2"]
@@ -191,16 +109,17 @@ margin_right = 380.0
 margin_bottom = 646.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
+focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 toggle_mode = false
-enabled_focus_mode = 0
+enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 4 )
-script = ExtResource( 5 )
+texture_normal = ExtResource( 5 )
+script = ExtResource( 6 )
 _sections_unfolded = [ "Focus", "Rect", "Textures" ]
 
 [node name="F" type="TextureButton" parent="." index="3" groups=[
@@ -212,8 +131,8 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 1024.0
-margin_bottom = 720.0
+margin_right = 469.0
+margin_bottom = 355.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -225,26 +144,24 @@ action_mode = 0
 enabled_focus_mode = 0
 shortcut = null
 group = null
-texture_normal = ExtResource( 6 )
-texture_pressed = ExtResource( 7 )
-texture_hover = ExtResource( 8 )
-texture_click_mask = ExtResource( 9 )
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 8 )
+texture_hover = ExtResource( 9 )
 script = ExtResource( 10 )
-_sections_unfolded = [ "Pause", "Rect", "Textures" ]
+_sections_unfolded = [ "Pause", "Textures" ]
 
 [node name="Gangster" type="TextureButton" parent="F" index="0" groups=[
 "persistent",
 ]]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 515.0
-margin_top = 30.0
-margin_right = 1011.0
-margin_bottom = 126.0
+margin_left = 514.0
+margin_top = 16.0
+margin_right = 1010.0
+margin_bottom = 112.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -262,9 +179,6 @@ texture_pressed = ExtResource( 12 )
 texture_disabled = ExtResource( 13 )
 script = ExtResource( 14 )
 _sections_unfolded = [ "Pause", "Rect", "Textures" ]
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Gangster_Gang_Size" type="Label" parent="F/Gangster" index="0"]
 
@@ -272,10 +186,12 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 379.0
-margin_top = 53.0
-margin_right = 491.0
-margin_bottom = 73.0
+margin_left = 380.0
+margin_top = 50.0
+margin_right = 492.0
+margin_bottom = 70.0
+grow_horizontal = 0
+grow_vertical = 0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -285,6 +201,7 @@ size_flags_vertical = 4
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+_sections_unfolded = [ "Rect" ]
 
 [node name="Gangster_Cost" type="Label" parent="F/Gangster" index="1"]
 
@@ -292,10 +209,12 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 329.0
+margin_left = 330.0
 margin_top = 16.0
-margin_right = 489.0
+margin_right = 490.0
 margin_bottom = 36.0
+grow_horizontal = 0
+grow_vertical = 0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -305,20 +224,20 @@ size_flags_vertical = 4
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+_sections_unfolded = [ "Rect" ]
 
 [node name="Enforcer" type="TextureButton" parent="F" index="1" groups=[
 "persistent",
 ]]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 515.0
-margin_top = 143.0
-margin_right = 1011.0
-margin_bottom = 239.0
+margin_left = 514.0
+margin_top = 132.0
+margin_right = 1010.0
+margin_bottom = 228.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -336,9 +255,6 @@ texture_pressed = ExtResource( 16 )
 texture_disabled = ExtResource( 17 )
 script = ExtResource( 18 )
 _sections_unfolded = [ "Focus", "Pause", "Rect", "Textures" ]
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Enforcer_Gang_Size" type="Label" parent="F/Enforcer" index="0"]
 
@@ -359,6 +275,7 @@ size_flags_vertical = 4
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+_sections_unfolded = [ "Hint", "Rect" ]
 
 [node name="Enforcer_Cost" type="Label" parent="F/Enforcer" index="1"]
 
@@ -379,20 +296,20 @@ size_flags_vertical = 4
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+_sections_unfolded = [ "Rect" ]
 
 [node name="Framer" type="TextureButton" parent="F" index="2" groups=[
 "persistent",
 ]]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 515.0
-margin_top = 250.0
-margin_right = 1011.0
-margin_bottom = 346.0
+margin_left = 514.0
+margin_top = 248.0
+margin_right = 1010.0
+margin_bottom = 344.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -410,9 +327,6 @@ texture_pressed = ExtResource( 20 )
 texture_disabled = ExtResource( 21 )
 script = ExtResource( 22 )
 _sections_unfolded = [ "Focus", "Pause", "Rect", "Textures" ]
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Framer_Gang_Size" type="Label" parent="F/Framer" index="0"]
 
@@ -458,15 +372,14 @@ max_lines_visible = -1
 "persistent",
 ]]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 515.0
-margin_top = 360.0
-margin_right = 1011.0
-margin_bottom = 456.0
+margin_left = 514.0
+margin_top = 364.0
+margin_right = 1010.0
+margin_bottom = 460.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -484,9 +397,6 @@ texture_pressed = ExtResource( 24 )
 texture_disabled = ExtResource( 25 )
 script = ExtResource( 26 )
 _sections_unfolded = [ "Focus", "Pause", "Rect", "Size Flags", "Textures" ]
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Consig_Gang_Size" type="Label" parent="F/Consig" index="0"]
 
@@ -537,10 +447,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 515.0
-margin_top = 470.0
-margin_right = 1011.0
-margin_bottom = 566.0
+margin_left = 514.0
+margin_top = 480.0
+margin_right = 1010.0
+margin_bottom = 576.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -558,9 +468,6 @@ texture_pressed = ExtResource( 28 )
 texture_disabled = ExtResource( 29 )
 script = ExtResource( 30 )
 _sections_unfolded = [ "Focus", "Pause", "Rect", "Textures" ]
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Hitman_Gang_Size" type="Label" parent="F/Hitman" index="0"]
 
@@ -611,10 +518,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 515.0
-margin_top = 583.0
-margin_right = 1012.0
-margin_bottom = 679.0
+margin_left = 514.0
+margin_top = 596.0
+margin_right = 1011.0
+margin_bottom = 692.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -632,9 +539,6 @@ texture_pressed = ExtResource( 32 )
 texture_disabled = ExtResource( 33 )
 script = ExtResource( 34 )
 _sections_unfolded = [ "Focus", "Pause", "Rect", "Textures" ]
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Godfather_Gang_Size" type="Label" parent="F/Godfather" index="0"]
 
@@ -685,10 +589,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 183.0
-margin_top = 363.0
-margin_right = 413.0
-margin_bottom = 433.0
+margin_left = 180.0
+margin_top = 360.0
+margin_right = 410.0
+margin_bottom = 430.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -699,7 +603,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 script = ExtResource( 35 )
-_sections_unfolded = [ "Pause" ]
+_sections_unfolded = [ "Pause", "Rect" ]
 
 [node name="WalletTexture" type="TextureRect" parent="F/WalletText" index="0"]
 
@@ -796,37 +700,18 @@ one_shot = false
 autostart = true
 script = ExtResource( 42 )
 
-[node name="SettingsPanel" type="MarginContainer" parent="." index="5"]
+[node name="Settings_Panel" type="PopupPanel" parent="." index="5"]
 
-editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = -529.0
-margin_top = 72.0
-margin_right = -29.0
-margin_bottom = 472.0
-rect_min_size = Vector2( 500, 400 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-script = ExtResource( 43 )
-_sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Pause" ]
-
-[node name="Settings_Panel" type="PopupPanel" parent="SettingsPanel" index="0"]
-
+pause_mode = 2
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 8.0
-margin_right = 500.0
-margin_bottom = 400.0
+margin_left = -529.0
+margin_top = 22.0
+margin_right = -25.0
+margin_bottom = 442.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -834,12 +719,12 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 popup_exclusive = false
-_sections_unfolded = [ "Anchor", "Rect", "Size Flags" ]
-__meta__ = {
-"_edit_lock_": true
-}
+script = ExtResource( 43 )
+_sections_unfolded = [ "Anchor", "Pause", "Rect" ]
 
-[node name="SFX_Volume_Slider" type="HSlider" parent="SettingsPanel/Settings_Panel" index="0"]
+[node name="SFX_Volume_Slider" type="HSlider" parent="Settings_Panel" index="0" groups=[
+"persistent",
+]]
 
 anchor_left = 1.0
 anchor_top = 0.0
@@ -868,12 +753,12 @@ tick_count = 0
 ticks_on_borders = false
 focus_mode = 2
 script = ExtResource( 44 )
-_sections_unfolded = [ "Anchor", "Rect" ]
+_sections_unfolded = [ "Rect" ]
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="sfx_label" type="Label" parent="SettingsPanel/Settings_Panel/SFX_Volume_Slider" index="0"]
+[node name="sfx_label" type="Label" parent="Settings_Panel/SFX_Volume_Slider" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -895,11 +780,8 @@ lines_skipped = 0
 max_lines_visible = -1
 script = ExtResource( 45 )
 _sections_unfolded = [ "Rect" ]
-__meta__ = {
-"_edit_lock_": true
-}
 
-[node name="MuteSoundBox" type="CheckBox" parent="SettingsPanel/Settings_Panel/SFX_Volume_Slider" index="1"]
+[node name="MuteSoundBox" type="CheckBox" parent="Settings_Panel/SFX_Volume_Slider" index="1"]
 
 editor/display_folded = true
 anchor_left = 1.0
@@ -925,7 +807,7 @@ flat = false
 align = 0
 _sections_unfolded = [ "Anchor", "Rect" ]
 
-[node name="MuteSound_Label" type="Label" parent="SettingsPanel/Settings_Panel/SFX_Volume_Slider/MuteSoundBox" index="0"]
+[node name="MuteSound_Label" type="Label" parent="Settings_Panel/SFX_Volume_Slider/MuteSoundBox" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -949,7 +831,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="MuteMusicBox" type="CheckBox" parent="SettingsPanel/Settings_Panel/SFX_Volume_Slider" index="2"]
+[node name="MuteMusicBox" type="CheckBox" parent="Settings_Panel/SFX_Volume_Slider" index="2"]
 
 editor/display_folded = true
 anchor_left = 1.0
@@ -975,7 +857,7 @@ flat = false
 align = 0
 _sections_unfolded = [ "Anchor", "Rect" ]
 
-[node name="MuteMusic_Label" type="Label" parent="SettingsPanel/Settings_Panel/SFX_Volume_Slider/MuteMusicBox" index="0"]
+[node name="MuteMusic_Label" type="Label" parent="Settings_Panel/SFX_Volume_Slider/MuteMusicBox" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -999,7 +881,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Music_Volume_Slider" type="HSlider" parent="SettingsPanel/Settings_Panel/SFX_Volume_Slider" index="3"]
+[node name="Music_Volume_Slider" type="HSlider" parent="Settings_Panel/SFX_Volume_Slider" index="3"]
 
 editor/display_folded = true
 anchor_left = 0.0
@@ -1034,7 +916,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="music_label" type="Label" parent="SettingsPanel/Settings_Panel/SFX_Volume_Slider/Music_Volume_Slider" index="0"]
+[node name="music_label" type="Label" parent="Settings_Panel/SFX_Volume_Slider/Music_Volume_Slider" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -1058,10 +940,11 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="ResolutionButton" type="OptionButton" parent="SettingsPanel/Settings_Panel" index="1"]
+[node name="ResolutionButton" type="OptionButton" parent="Settings_Panel" index="1" groups=[
+"persistent",
+]]
 
 pause_mode = 1
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -1086,13 +969,13 @@ flat = false
 align = 0
 items = [  ]
 selected = -1
-script = SubResource( 1 )
+script = ExtResource( 47 )
 _sections_unfolded = [ "Anchor", "Pause" ]
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="ResolutionLabel" type="Label" parent="SettingsPanel/Settings_Panel/ResolutionButton" index="0"]
+[node name="ResolutionLabel" type="Label" parent="Settings_Panel/ResolutionButton" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -1114,7 +997,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Anchor" ]
 
-[node name="Confirm_ResChange" type="ConfirmationDialog" parent="SettingsPanel/Settings_Panel/ResolutionButton" index="2"]
+[node name="Confirm_ResChange" type="ConfirmationDialog" parent="Settings_Panel/ResolutionButton" index="2"]
 
 pause_mode = 2
 visible = false
@@ -1122,10 +1005,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 25.0
-margin_top = 120.0
-margin_right = 225.0
-margin_bottom = 200.0
+margin_right = 200.0
+margin_bottom = 80.0
+grow_horizontal = 0
+grow_vertical = 0
 rect_min_size = Vector2( 200, 70 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -1137,10 +1020,10 @@ popup_exclusive = true
 window_title = "Resolution Change!"
 resizable = false
 dialog_hide_on_ok = true
-script = SubResource( 2 )
-_sections_unfolded = [ "Margin", "Popup" ]
+script = ExtResource( 48 )
+_sections_unfolded = [ "Anchor", "Popup", "Rect" ]
 
-[node name="Reset_Button" type="Button" parent="SettingsPanel/Settings_Panel" index="2"]
+[node name="Reset_Button" type="Button" parent="Settings_Panel" index="2"]
 
 editor/display_folded = true
 anchor_left = 0.0
@@ -1164,13 +1047,13 @@ shortcut = null
 group = null
 flat = false
 align = 1
-script = ExtResource( 47 )
+script = ExtResource( 49 )
 _sections_unfolded = [ "Anchor" ]
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Reset_Label" type="Label" parent="SettingsPanel/Settings_Panel/Reset_Button" index="0"]
+[node name="Reset_Label" type="Label" parent="Settings_Panel/Reset_Button" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -1189,12 +1072,9 @@ size_flags_vertical = 4
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-script = ExtResource( 48 )
-__meta__ = {
-"_edit_lock_": true
-}
+script = ExtResource( 50 )
 
-[node name="Hard_Quit_Button" type="Button" parent="SettingsPanel/Settings_Panel" index="3"]
+[node name="Hard_Quit_Button" type="Button" parent="Settings_Panel" index="3"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -1217,13 +1097,15 @@ shortcut = null
 group = null
 flat = false
 align = 1
-script = ExtResource( 49 )
+script = ExtResource( 51 )
 _sections_unfolded = [ "Anchor" ]
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="LowProcessor_Box" type="CheckBox" parent="SettingsPanel/Settings_Panel" index="4"]
+[node name="LowProcessor_Box" type="CheckBox" parent="Settings_Panel" index="4" groups=[
+"persistent",
+]]
 
 editor/display_folded = true
 anchor_left = 0.0
@@ -1247,9 +1129,12 @@ shortcut = null
 group = null
 flat = false
 align = 0
-script = ExtResource( 50 )
+script = ExtResource( 52 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="LowProcessor_Txt" type="Label" parent="SettingsPanel/Settings_Panel/LowProcessor_Box" index="0"]
+[node name="LowProcessor_Txt" type="Label" parent="Settings_Panel/LowProcessor_Box" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -1270,21 +1155,21 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[connection signal="pressed" from="buyMultiplier" to="buyMultiplier" method="_on_buyMultiplier_pressed"]
-
 [connection signal="pressed" from="buyMultiplier" to="F" method="_on_buyMultiplier_pressed"]
 
-[connection signal="enable_button" from="F" to="F/Gangster" method="_on_F_enable_button"]
+[connection signal="pressed" from="buyMultiplier" to="buyMultiplier" method="_on_buyMultiplier_pressed"]
 
-[connection signal="enable_button" from="F" to="F/Enforcer" method="_on_F_enable_button"]
-
-[connection signal="enable_button" from="F" to="F/Framer" method="_on_F_enable_button"]
-
-[connection signal="enable_button" from="F" to="F/Consig" method="_on_F_enable_button"]
+[connection signal="enable_button" from="F" to="F/Godfather" method="_on_F_enable_button"]
 
 [connection signal="enable_button" from="F" to="F/Hitman" method="_on_F_enable_button"]
 
-[connection signal="enable_button" from="F" to="F/Godfather" method="_on_F_enable_button"]
+[connection signal="enable_button" from="F" to="F/Consig" method="_on_F_enable_button"]
+
+[connection signal="enable_button" from="F" to="F/Framer" method="_on_F_enable_button"]
+
+[connection signal="enable_button" from="F" to="F/Enforcer" method="_on_F_enable_button"]
+
+[connection signal="enable_button" from="F" to="F/Gangster" method="_on_F_enable_button"]
 
 [connection signal="pressed" from="F" to="F" method="_on_F_pressed"]
 
@@ -1314,34 +1199,42 @@ max_lines_visible = -1
 
 [connection signal="confirmed" from="F/AFK_Respect_Dialog" to="F/AFK_Respect_Dialog" method="_on_AFK_Respect_Dialog_confirmed"]
 
-[connection signal="timeout" from="GlobalTimer" to="." method="_on_GlobalTimer_timeout"]
-
-[connection signal="timeout" from="GlobalTimer" to="F/Gangster" method="_on_GlobalTimer_timeout"]
-
-[connection signal="timeout" from="GlobalTimer" to="F/Enforcer" method="_on_GlobalTimer_timeout"]
-
-[connection signal="timeout" from="GlobalTimer" to="F/Framer" method="_on_GlobalTimer_timeout"]
-
-[connection signal="timeout" from="GlobalTimer" to="F/Consig" method="_on_GlobalTimer_timeout"]
+[connection signal="timeout" from="GlobalTimer" to="F/Godfather" method="_on_GlobalTimer_timeout"]
 
 [connection signal="timeout" from="GlobalTimer" to="F/Hitman" method="_on_GlobalTimer_timeout"]
 
-[connection signal="timeout" from="GlobalTimer" to="F/Godfather" method="_on_GlobalTimer_timeout"]
+[connection signal="timeout" from="GlobalTimer" to="F/Consig" method="_on_GlobalTimer_timeout"]
 
-[connection signal="value_changed" from="SettingsPanel/Settings_Panel/SFX_Volume_Slider" to="SettingsPanel/Settings_Panel/SFX_Volume_Slider" method="_on_SFX_Volume_Slider_value_changed"]
+[connection signal="timeout" from="GlobalTimer" to="F/Framer" method="_on_GlobalTimer_timeout"]
 
-[connection signal="toggled" from="SettingsPanel/Settings_Panel/SFX_Volume_Slider/MuteSoundBox" to="SettingsPanel/Settings_Panel/SFX_Volume_Slider" method="_on_MuteSoundBox_toggled"]
+[connection signal="timeout" from="GlobalTimer" to="F/Enforcer" method="_on_GlobalTimer_timeout"]
 
-[connection signal="toggled" from="SettingsPanel/Settings_Panel/SFX_Volume_Slider/MuteMusicBox" to="SettingsPanel/Settings_Panel/SFX_Volume_Slider" method="_on_MuteMusicBox_toggled"]
+[connection signal="timeout" from="GlobalTimer" to="F/Gangster" method="_on_GlobalTimer_timeout"]
 
-[connection signal="value_changed" from="SettingsPanel/Settings_Panel/SFX_Volume_Slider/Music_Volume_Slider" to="SettingsPanel/Settings_Panel/SFX_Volume_Slider/Music_Volume_Slider" method="_on_Music_Volume_Slider_value_changed"]
+[connection signal="timeout" from="GlobalTimer" to="." method="_on_GlobalTimer_timeout"]
 
-[connection signal="confirmed" from="SettingsPanel/Settings_Panel/ResolutionButton/Confirm_ResChange" to="SettingsPanel/Settings_Panel/ResolutionButton/Confirm_ResChange" method="_on_ConfirmationDialog_confirmed"]
+[connection signal="value_changed" from="Settings_Panel/SFX_Volume_Slider" to="Settings_Panel/SFX_Volume_Slider" method="_on_SFX_Volume_Slider_value_changed"]
 
-[connection signal="pressed" from="SettingsPanel/Settings_Panel/Reset_Button" to="SettingsPanel/Settings_Panel/Reset_Button" method="_on_Button_pressed"]
+[connection signal="toggled" from="Settings_Panel/SFX_Volume_Slider/MuteSoundBox" to="Settings_Panel/SFX_Volume_Slider" method="_on_MuteSoundBox_toggled"]
 
-[connection signal="pressed" from="SettingsPanel/Settings_Panel/Hard_Quit_Button" to="SettingsPanel/Settings_Panel/Hard_Quit_Button" method="_on_Hard_Quit_Button_pressed"]
+[connection signal="toggled" from="Settings_Panel/SFX_Volume_Slider/MuteMusicBox" to="Settings_Panel/SFX_Volume_Slider" method="_on_MuteMusicBox_toggled"]
 
-[connection signal="toggled" from="SettingsPanel/Settings_Panel/LowProcessor_Box" to="SettingsPanel/Settings_Panel/LowProcessor_Box" method="_on_LowProcessor_Box_toggled"]
+[connection signal="value_changed" from="Settings_Panel/SFX_Volume_Slider/Music_Volume_Slider" to="Settings_Panel/SFX_Volume_Slider/Music_Volume_Slider" method="_on_Music_Volume_Slider_value_changed"]
+
+[connection signal="resolution_changed" from="Settings_Panel/ResolutionButton" to="F" method="_on_ResolutionButton_resolution_changed"]
+
+[connection signal="resolution_changed" from="Settings_Panel/ResolutionButton" to="." method="_on_ResolutionButton_resolution_changed"]
+
+[connection signal="resolution_changed" from="Settings_Panel/ResolutionButton" to="Background" method="_on_ResolutionButton_resolution_changed"]
+
+[connection signal="resolution_changed" from="Settings_Panel/ResolutionButton" to="Settings_Panel/ResolutionButton" method="_on_ResolutionButton_resolution_changed"]
+
+[connection signal="confirmed" from="Settings_Panel/ResolutionButton/Confirm_ResChange" to="Settings_Panel/ResolutionButton/Confirm_ResChange" method="_on_ConfirmationDialog_confirmed"]
+
+[connection signal="pressed" from="Settings_Panel/Reset_Button" to="Settings_Panel/Reset_Button" method="_on_Button_pressed"]
+
+[connection signal="pressed" from="Settings_Panel/Hard_Quit_Button" to="Settings_Panel/Hard_Quit_Button" method="_on_Hard_Quit_Button_pressed"]
+
+[connection signal="toggled" from="Settings_Panel/LowProcessor_Box" to="Settings_Panel/LowProcessor_Box" method="_on_LowProcessor_Box_toggled"]
 
 

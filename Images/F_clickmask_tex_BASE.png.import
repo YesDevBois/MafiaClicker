@@ -1,0 +1,18 @@
+[remap]
+
+importer="bitmap"
+type="BitMap"
+path="res://.import/F_clickmask_tex_BASE.png-9f4e024c868a595f11d6f917a7e3ded9.res"
+
+[deps]
+
+source_file="res://Images/F_clickmask_tex_BASE.png"
+source_md5="1f3dc4ff681581c1d058ffc5d06a15b1"
+
+dest_files=[ "res://.import/F_clickmask_tex_BASE.png-9f4e024c868a595f11d6f917a7e3ded9.res" ]
+dest_md5="263fc346ef7223a07a094ae5a9298204"
+
+[params]
+
+create_from=0
+threshold=0.5

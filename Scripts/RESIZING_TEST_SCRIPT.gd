@@ -1,14 +1,4 @@
-extends PopupPanel
-
-var sound = true
-var sound_volume = 1.0
-var music = true
-var music_volume = 1.0
-var popup_open = false
-
-var settings_panel_pos = Vector2(0,0)
-var screen_size = OS.get_screen_size()
-var window_size = OS.get_window_size()
+extends Panel
 
 var VIEWPORT_BOUND = Vector2(0,0)
 const VIEWPORT_MARGIN = Vector2(24,24)
@@ -110,10 +100,12 @@ func set_size_margin(control, value, bounded = false):
 	if(control != null):
 		print("NOT NULL")
 		if(!bounded):
+			print("NOT-BOUNDED. VALUE := ",value)
 			set_right_margin(control, value.x)
 			set_bottom_margin(control, value.y)
 			return
 		else:
+			print("BOUNDED. VALUE := ",value)
 			set_right_margin(control, value.x, true)
 			set_bottom_margin(control, value.y, true)
 			left_justify(control, true)
@@ -173,38 +165,3 @@ func warp_center_of_screen(control):
 	tempPos.y = (VIEWPORT_BOUND.y * 0.5) - (control.get_size().y * 0.5)
 	
 	control.set_global_position(tempPos)
-
-func set_viewport_bound(VIEWPORT):
-	VIEWPORT_BOUND = VIEWPORT
-	return VIEWPORT
-
-func get_viewport_bound():
-	return VIEWPORT_BOUND
-
-func _ready():
-	set_pause_mode(PAUSE_MODE_PROCESS)
-	
-	VIEWPORT_BOUND = set_viewport_bound(get_viewport().get_size())
-	
-	# sets the position of the games into the middle of the computer screen
-	OS.set_window_position((screen_size*0.5) - (window_size*0.5))
-	
-	# supposed to warp panels
-	warp_center_of_screen(self)
-
-func _input(event):
-	var s_key_pressed = event.is_action_pressed("ui_s_key")
-	
-	if(s_key_pressed):
-		popup_open = !(popup_open)
-		if(popup_open == true):
-			warp_center_of_screen(self)
-			show()
-		else:
-			warp_center_of_screen(self)
-			hide()
-		
-
-func _on_ResolutionButton_resolution_changed(current_resolution):
-	set_viewport_bound(current_resolution)
-	warp_center_of_screen(self)

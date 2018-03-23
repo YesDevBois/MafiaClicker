@@ -3,6 +3,7 @@ extends HSlider
 onready var ROOT_NODE = get_tree().get_root().get_node("ROOT")
 onready var F_button = ROOT_NODE.get_node("F")
 onready var music_stream = F_button.get_node("Background_Music_Stream")
+onready var SFX_slider = get_parent()
 
 const MIN_VOLUME = -80.0
 const MAX_VOLUME = 10.0
@@ -24,4 +25,5 @@ func _ready():
 
 func _on_Music_Volume_Slider_value_changed(value):
 	var volume = get_value()
+	SFX_slider.current_music_vol = volume
 	music_stream.set_volume_db(volume)

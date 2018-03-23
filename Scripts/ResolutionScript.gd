@@ -5,12 +5,14 @@ var resolution_y = [720, 900, 1080]
 var current_resolution = Vector2(0, 0)
 var previous_res_index 
 var current_res_index
-var Settings_Panel = get_parent()
+var dropdown_selected = 0
+
+signal resolution_changed
 
 func change_resolution(idx):
 	set_res_var(idx)
-	print("The current resolution is: " + str(current_resolution))
 	OS.set_window_size(current_resolution)
+	emit_signal("resolution_changed", current_resolution,idx)
 
 func get_res_var():
 	return current_resolution
@@ -32,7 +34,8 @@ func check_resolution():
 		# change the resolution and pass the selected resolution index variable away
 		change_resolution(current_res_index)
 		# check if the selection is okay
-		get_node("ConfirmationDialog").show()
+		get_parent().warp_center_of_screen(get_node("Confirm_ResChange"))
+		get_node("Confirm_ResChange").show()
 		get_tree().paused = true
 
 func _ready():
@@ -40,7 +43,7 @@ func _ready():
 	add_item("1600x900",1)
 	add_item("1920x1080",2)
 	
-	select(0)
+	select(dropdown_selected)
 	previous_res_index = get_item_id(get_selected_id())
 	current_res_index = get_item_id(get_selected_id())
 	change_resolution(current_res_index)
@@ -48,3 +51,17 @@ func _ready():
 func _process(delta):
 	if(is_visible_in_tree()):
 		check_resolution()
+
+func _on_ResolutionButton_resolution_changed(current_resolution, index):
+	get_parent().set_viewport_bound(current_resolution)
+	get_parent().warp_center_of_screen(get_node("Confirm_ResChange"))
+
+func _on_Fullscreen_Box_toggled(button_pressed):
+	OS.set_window_fullscreen(button_pressed)
+
+func save():
+	var save_dict = {
+		current_resolution = current_resolution,
+		dropdown_selected = dropdown_selected
+	}
+	return save_dict

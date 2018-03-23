@@ -15,6 +15,10 @@ onready var Hitman_Cost_txt = get_node("Hitman_Cost_Txt")
 func _ready():
 	# This allows spacebar to be used to for only incrementing F
 	set_focus_mode(FOCUS_NONE)
+	
+	# set the texture to expand
+	set_expand(true)
+	
 	costmultiplier = 1.0 + (amount*0.1)
 	cost = basecost*costmultiplier
 	
